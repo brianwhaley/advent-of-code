@@ -27,9 +27,8 @@ function isWithinRange(pw){
 }
 
 function hasAdjacent(pw){
-	var pwCount = 0 ;
 	var pwArr = pw.toString().split("");
-	var pwAdj = pwArr.filter( (e, i, a) => e == a[(i+1)] );
+	var pwAdj = pwArr.filter( (e, i, a) => e == a[(i-1)] );
 	return ( pwAdj.length > 0) ;
 	// for ( i = 0 ; i < pwArr.length ; i ++ ) {
 	//	if( pwArr[i] == pwArr[i+1]) pwCount += 1 ;
@@ -38,9 +37,12 @@ function hasAdjacent(pw){
 }
 
 function hasOnlyAdjacent(pw){
+	var pwCount = 0 ;
 	var pwArr = pw.toString().split("");
-	var pwAdj = pwArr.filter( (e, i, a) => e == a[(i+1)] );
-	return ( pwAdj.length == 1 || pwAdj.length == 3 ) ;
+	var pwAdj = pwArr.filter( function(e, i, a) {
+  		if( ( pwArr[i] == pwArr[i+1] ) && ( pwArr[i] != pwArr[i+2] )  && ( pwArr[i] != pwArr[i-1] ) ) pwCount += 1 ;
+	});
+	return (pwCount > 0) ;
 }
 
 function isIncreasing(pw){
