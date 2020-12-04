@@ -2,6 +2,6 @@
 
 https://adventofcode.com
 
-AmEx is a sponsor.  join the #advent-of-code slack channel to get the sponsor code.
+AmEx is a sponsor.  Join the #advent-of-code slack channel to get the sponsor code.
 
-Private AmEx Leaderboard code: 219072-ff028fb4
+There is also an AmEx Leaderboard.  Join the #advent-of-code slack channel to get the leaderboard code.
