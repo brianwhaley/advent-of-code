@@ -1111,20 +1111,17 @@ pid (Passport ID)
 cid (Country ID)
 */
 
-/* 
-byr (Birth Year) - four digits; at least 1920 and at most 2002.
-iyr (Issue Year) - four digits; at least 2010 and at most 2020.
-eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
-hgt (Height) - a number followed by either cm or in:
-If cm, the number must be at least 150 and at most 193.
-If in, the number must be at least 59 and at most 76.
-hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
-ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
-pid (Passport ID) - a nine-digit number, including leading zeroes.
-cid (Country ID) - ignored, missing or not.
-*/
 
-var ecls = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
+
+// ========== PART 1 ========== 
+
+
+
+
+function isValidPassport(pp){
+	if(pp.byr && pp.iyr && pp.eyr && pp.hgt && pp.hcl && pp.ecl && pp.pid ) return true ;
+	return false;
+}
 
 (function(){
 	var validPassports = 0 ;
@@ -1144,33 +1141,71 @@ var ecls = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
 
 
 
-function isValidPassport(pp){
-	if(pp.byr && pp.iyr && pp.eyr && pp.hgt && pp.hcl && pp.ecl && pp.pid ) return true ;
-	return false;
+// ========== PART 2 ==========
+
+/* 
+byr (Birth Year) - four digits; at least 1920 and at most 2002.
+iyr (Issue Year) - four digits; at least 2010 and at most 2020.
+eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
+hgt (Height) - a number followed by either cm or in:
+If cm, the number must be at least 150 and at most 193.
+If in, the number must be at least 59 and at most 76.
+hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
+ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
+pid (Passport ID) - a nine-digit number, including leading zeroes.
+cid (Country ID) - ignored, missing or not.
+*/
+
+var ecls = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
+
+
+function isValidBYR(thisBYR){
+	return ( thisBYR.length == 4 && parseInt(thisBYR) >= 1920 && parseInt(thisBYR) <= 2002 ) ;
 }
 
+function isValidIYR(thisIYR){
+	return ( thisIYR.length == 4 && parseInt(thisIYR) >= 2010 && parseInt(thisIYR) <= 2020 ) ;
+}
 
+function isValidEYR(thisEYR){
+	return ( thisEYR.length == 4 && parseInt(thisEYR) >= 2020 && parseInt(thisEYR) <= 2030 ) ;
+}
+
+function isValidHGT(thisHGT){
+	var mySys = thisHGT.slice(-2) ;
+	var myHGT = thisHGT.substr(0, thisHGT.length-2) ;
+	if ( ( mySys != "cm" ) && ( mySys != "in" ) ) return false ;
+	switch(mySys) {
+  		case "cm":
+    		return ( myHGT >= 150 && myHGT <= 193 ); break;
+  		case "in":
+    		return ( myHGT >= 59 && myHGT <= 76 ); break;
+	}
+	return true ;
+}
+
+function isValidHCL(thisHCL){
+  	var hclPattern = /^#[0-9a-f]{6}/i ;
+  	var hclResult = thisHCL.match(hclPattern);
+	return (hclResult && hclResult.length > 0) ;
+}
+
+function isValidECL(thisECL){
+	return ( ecls.includes(thisECL) ) ;
+}
+
+function isValidPID(thisPID){
+	return ( thisPID.length == 9 ) ;
+}
 
 function isValidStrictPassport(pp){
-	var validByr = ( pp.byr.length == 4 && parseInt(pp.byr) >= 1920 && parseInt(pp.byr) <= 2002 );
-	var validIyr = ( pp.iyr.length == 4 && parseInt(pp.iyr) >= 2010 && parseInt(pp.iyr) <= 2020 );
-	var validEyr = ( pp.eyr.length == 4 && parseInt(pp.eyr) >= 2020 && parseInt(pp.eyr) <= 2030 );
-	var validHgt1 = (pp.hgt.includes("cm") || pp.hgt.includes("in") );
-	var thisHgt = pp.hgt.substr(0, pp.hgt.length-2) ;
-	var validHgt2 = false ;	
-	switch(pp.hgt.slice(-2)) {
-  		case "cm":
-    		validHgt2 = ( thisHgt >= 150 && thisHgt <= 193 ); break;
-  		case "in":
-    		validHgt2 = ( thisHgt >= 59 && thisHgt <= 76 ); break;
-	}
-  	var hclPattern = /^#[0-9a-f]{6}/i ;
-  	var hclResult = pp.hcl.match(hclPattern);
-	var validHcl = (hclResult && hclResult.length > 0) ;
-	var validEcl = ecls.includes(pp.ecl);
 	var validPid = ( pp.pid.length == 9 );
-	if (validByr && validIyr && validEyr && validHgt1 && validHgt2 && validHcl && validEcl && validPid) return true ;
+	if ( isValidBYR(pp.byr) && 
+		isValidIYR(pp.iyr) && 
+		isValidEYR(pp.eyr) && 
+		isValidHGT(pp.hgt) && 
+		isValidHCL(pp.hcl) &&
+		isValidECL(pp.ecl) && 
+		isValidPID(pp.pid) ) return true ;
 	return false;
 }
-
-
