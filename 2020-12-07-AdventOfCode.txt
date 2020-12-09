@@ -607,7 +607,6 @@ var inputs = [
 
 
 function parseInput(input){
-	// input.map(item => item.split(" contain "));
 	var arr = [] ;
 	for (i = 0; i < input.length; i++) {
 		var arr1 = input[i].split(" contain ");
@@ -638,6 +637,7 @@ async function countOuterBags(haystack, needle){
 }
 
 (async function(){
+    console.log("===== Part 1 =====");
 	var parsed = parseInput(inputs);
 	console.log(parsed);
 	var arrBags = await countOuterBags(parsed, "shiny gold bag") ;
@@ -680,6 +680,7 @@ function countInnerBags(haystack, needle, parentCount){
 
 
 (function(){
+    console.log("===== Part 2 =====");
 	var parsed = parseInput(inputs);
 	console.log(parsed);
 	countInnerBags(parsed, "shiny gold bag", 1) ;
