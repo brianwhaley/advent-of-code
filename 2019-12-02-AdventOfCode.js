@@ -4,6 +4,7 @@ var int_codes = [
 
 
 (function(){
+	console.log("===== Part 1 =====");
 	var intcodes = int_codes ;
 	intcodes[1] = 12;
 	intcodes[2] = 2;

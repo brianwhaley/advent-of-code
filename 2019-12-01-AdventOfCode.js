@@ -1,4 +1,4 @@
-var masses = [
+var inputs = [
 78207,
 89869,
 145449,
@@ -102,19 +102,34 @@ var masses = [
 ];
 
 (function(){
+	console.log("===== Part 1 =====");
 	var fuel = 0;
-	for (i = 0; i < masses.length; i++) {
-		var mass = masses[i];
+	for (i = 0; i < inputs.length; i++) {
+		var mass = inputs[i];
 		fuel += calculateFuel(mass) ;
 	}
 	console.log(fuel);
 })();
 
+(function(){
+	console.log("===== Part 2 =====");
+	var fuel = 0;
+	for (i = 0; i < inputs.length; i++) {
+		var mass = inputs[i];
+		fuel += recurseFuel(mass) ;
+	}
+	console.log(fuel);
+})();
+
 function calculateFuel(mass) {
+	return ( Math.floor( mass / 3 ) ) - 2;
+}
+
+function recurseFuel(mass) {
 	var fuel = ( Math.floor( mass / 3 ) ) - 2;
 	if (fuel <= 0) {
 		return 0 ;
 	} else {
-		return fuel + calculateFuel(fuel);
+		return fuel + recurseFuel(fuel);
 	}
 }
